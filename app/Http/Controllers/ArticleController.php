@@ -26,7 +26,13 @@ class ArticleController extends Controller
         ]);
 
         Article::create($request->all());
+
         return redirect()->route('articles.index')->with('success', 'Artikel berhasil disimpan.');
+    }
+
+    public function show(Article $article)
+    {
+        return view('articles.show', compact('article'));
     }
 
     public function edit(Article $article)
@@ -36,18 +42,20 @@ class ArticleController extends Controller
 
     public function update(Request $request, Article $article)
     {
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
         $article->update($request->all());
+
         return redirect()->route('articles.index')->with('success', 'Artikel berhasil diperbarui.');
     }
 
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect()->route('articles.index')->with('success', 'Artikel berhasil dihapus.');
-    }
 
-    public function show(Article $article)
-    {
-        return view('articles.show', compact('article'));
+        return redirect()->route('articles.index')->with('success', 'Artikel berhasil dihapus.');
     }
 }

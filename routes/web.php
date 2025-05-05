@@ -3,16 +3,30 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\ArticleController;
 
-// Halaman Home
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Ini adalah file untuk mendefinisikan rute web aplikasi Laravel kamu.
+| Route di bawah ini menggunakan controller resource dan route tambahan.
+|
+*/
+
+// Halaman Beranda
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-// CRUD untuk Siswa
+// CRUD Artikel
+Route::resource('articles', ArticleController::class);
+
+// CRUD Siswa
 Route::resource('siswa', SiswaController::class);
 
-// Cek koneksi database
+// Cek Koneksi Database
 Route::get('/test-db', function () {
     try {
         DB::connection()->getPdo();
